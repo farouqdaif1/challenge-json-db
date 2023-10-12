@@ -1,8 +1,8 @@
 
 module.exports = {
-  createFile
-  // deleteFile,
-  // readFile
+  createFile,
+  deleteFile,
+  readFile
 }
 const fs = require('fs')
 const path = require('path')
@@ -19,10 +19,19 @@ async function createFile (studentId, fileContent) {
     }
   })
 }
-async function readFile () {
-
+async function readFile (studentId) {
+  const fileName = `${studentId}.json`
+  const filePath = path.join(folderPath, fileName)
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error(`Error reading the file: ${err}`)
+    } else {
+      console.log(`File content of ${filePath}:`)
+      console.log(data)
+    }
+  })
 }
-async function deleteFile(studentId) {
+async function deleteFile (studentId) {
   const fileName = `${studentId}.json`
   const filePath = path.join(folderPath, fileName)
   fs.unlink(filePath, (err) => {
