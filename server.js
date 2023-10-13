@@ -10,14 +10,16 @@ const app = express()
 app.use(bodyParser.json())
 
 app.get('/health', api.getHealth)
-app.put('/:student-id/:propertyName(/:propertyName)', api.putStudentData)
-app.get('/:student-id/:propertyName(/:propertyName)', api.getStudentData)
-app.delete('/:student-id/:propertyName(/:propertyName)', api.removeStudentData)
+app.put('/:studentId/*', api.putStudentData)
+app.get('/:studentId/*', api.getStudentData)
+app.delete('/:studentId/*', api.removeStudentData)
 
 app.use(middleware.handleError)
 app.use(middleware.notFound)
+
 const server = app.listen(PORT, () =>
   console.log(`Server listening on port ${PORT}`)
+
 )
 
 if (require.main !== module) {

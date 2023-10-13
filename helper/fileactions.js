@@ -4,41 +4,37 @@ module.exports = {
   deleteFile,
   readFile
 }
-const fs = require('fs')
+const fs = require('fs').promises
 const path = require('path')
-const folderPath = __dirname + '/../data/'
+const folderPath = path.join(__dirname, '/../data/')
 
-async function createFile (studentId, fileContent) {
+async function createFile (studentId, postedData) {
   const fileName = `${studentId}.json`
   const filePath = path.join(folderPath, fileName)
-  fs.writeFile(filePath, JSON.stringify(fileContent), 'utf8', (err) => {
-    if (err) {
-      console.error('Error writing to the file:', err)
-    } else {
-      console.log('File has been written successfully.')
-    }
-  })
+  try {
+    const data = await fs.writeFile(filePath, JSON.stringify(postedData), 'utf8')
+    return data
+  } catch (error) {
+    throw error
+  }
 }
 async function readFile (studentId) {
   const fileName = `${studentId}.json`
   const filePath = path.join(folderPath, fileName)
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error(`Error reading the file: ${err}`)
-    } else {
-      console.log(`File content of ${filePath}:`)
-      console.log(data)
-    }
-  })
+  try {
+    const data = await fs.readFile(filePath, 'utf-8')
+    return JSON.parse(data)
+  } catch (error) {
+    throw error
+  }
 }
 async function deleteFile (studentId) {
   const fileName = `${studentId}.json`
   const filePath = path.join(folderPath, fileName)
-  fs.unlink(filePath, (err) => {
-    if (err) {
-      console.error(`Error deleting the file: ${err}`)
-    } else {
-      console.log(`File ${filePath} has been deleted.`)
-    }
-  })
+  try {
+    const student = await fs.unlink(filePath)
+    return student
+  } catch (error) {
+    throw error
+  }
 }
