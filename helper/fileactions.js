@@ -8,7 +8,7 @@ const fs = require('fs').promises
 const path = require('path')
 const folderPath = path.join(__dirname, '/../data/')
 
-async function createFile (studentId, postedData) {
+async function createFile(studentId, postedData) {
   const fileName = `${studentId}.json`
   const filePath = path.join(folderPath, fileName)
   try {
@@ -18,7 +18,7 @@ async function createFile (studentId, postedData) {
     throw error
   }
 }
-async function readFile (studentId) {
+async function readFile(studentId) {
   const fileName = `${studentId}.json`
   const filePath = path.join(folderPath, fileName)
   try {
@@ -28,7 +28,7 @@ async function readFile (studentId) {
     throw error
   }
 }
-async function deleteFile (studentId) {
+async function deleteFile(studentId) {
   const fileName = `${studentId}.json`
   const filePath = path.join(folderPath, fileName)
   try {

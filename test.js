@@ -14,6 +14,13 @@ tape('health', async function (t) {
     t.end()
   })
 })
+tape("getStudentDataEndPoint", async function (t) {
+  jsonist.get(url, (err, body) => {
+    if (err) t.error(err)
+    t.ok(body.success, 'successful getStudentDataEndPoint')
+    t.end()
+  })
+})
 
 tape('cleanup', function (t) {
   server.close()
