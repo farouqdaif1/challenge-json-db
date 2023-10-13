@@ -7,21 +7,20 @@ module.exports = {
 const fileHelper = require('./helper/fileactions')
 const utils = require('./helper/util')
 
-async function getHealth(req, res, next) {
+async function getHealth (req, res, next) {
   res.json({ success: true })
 }
-async function putStudentData(req, res) {
+async function putStudentData (req, res) {
   const { studentId } = req.params
   const postData = utils.createObject(req.params[0], req.body)
   try {
     const data = await fileHelper.createFile(studentId, postData)
-
-    res.json({ message: 'Data created Successfully', data})
+    res.json({ message: 'Data created Successfully', data })
   } catch (error) {
     res.status(500).json({ message: error, status: false })
   }
 }
-async function getStudentData(req, res) {
+async function getStudentData (req, res) {
   const path = req.params[0]
   const arrayPath = path.split(/\//)
   try {
@@ -34,16 +33,16 @@ async function getStudentData(req, res) {
     res.status(404).send({ error: err.message })
   }
 }
-async function removeStudentData(req, res) {
+async function removeStudentData (req, res) {
   const path = req.params[0]
   const arrayPath = path.split(/\//)
   try {
     const { studentId } = req.params
-    const fileContent = await fileHelper.readFile(studentId);
+    const fileContent = await fileHelper.readFile(studentId)
     const result = arrayPath.reduce((accumulator, current) =>
       accumulator && accumulator[current], fileContent)
-      await fileHelper.createFile(studentId, result)
-      res.json({ msg: "Data Deleted ", data: result })
+    const data = await fileHelper.createFile(studentId, result)
+    res.json({ msg: 'Data Deleted ', data: data })
   } catch (err) {
     res.status(404).send({ error: err.message })
   }
